@@ -5,12 +5,12 @@ namespace AccountManager.Domain.Events;
 
 public class AccountCreatedEvent : INotification
 {
-    public Account Account { get; }
-    public decimal InitialCredit { get; }
+    public Guid AccountId { get; }
+    public decimal InitialCredit { get; set; }
 
-    public AccountCreatedEvent(Account account, decimal initialCredit)
+    public AccountCreatedEvent(Guid accountId, decimal initialCredit)
     {
-        Account = account;
+        AccountId = accountId;
         InitialCredit = initialCredit;
     }
 }
