@@ -20,7 +20,7 @@ namespace AccountManager.Api.Controllers
         /// </summary>
         /// <param name="customerId"customer id</param>
         /// <returns>Ok if account was opened</returns>
-        [HttpPost]
+        [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<DetailedCustomerResponse>),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
