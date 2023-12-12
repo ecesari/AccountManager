@@ -1,4 +1,6 @@
-﻿using AccountManager.Application.Customers.Query.GetDetailedCustomerInformation;
+﻿using AccountManager.Application.Accounts.Models;
+using AccountManager.Application.Customers.Query.GetDetailedCustomerInformation;
+using AccountManager.Application.Transactions.Models;
 using AccountManager.Domain.Entities;
 using AutoMapper;
 

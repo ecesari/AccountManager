@@ -1,4 +1,6 @@
-﻿namespace AccountManager.Application.Customers.Query.GetDetailedCustomerInformation
+﻿using AccountManager.Application.Transactions.Models;
+
+namespace AccountManager.Application.Accounts.Models
 {
     public class AccountModel
     {

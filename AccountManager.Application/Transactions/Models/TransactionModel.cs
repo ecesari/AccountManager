@@ -1,4 +1,4 @@
-﻿namespace AccountManager.Application.Customers.Query.GetDetailedCustomerInformation
+﻿namespace AccountManager.Application.Transactions.Models
 {
     public class TransactionModel
     {
