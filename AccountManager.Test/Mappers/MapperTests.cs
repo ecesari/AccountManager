@@ -1,9 +1,11 @@
-﻿using AccountManager.Application.Common.Mapper;
+﻿using AccountManager.Application.Accounts.Models;
+using AccountManager.Application.Common.Mapper;
 using AccountManager.Application.Customers.Query.GetDetailedCustomerInformation;
+using AccountManager.Application.Transactions.Models;
 using AccountManager.Domain.Entities;
 using AutoMapper;
 
-namespace WeatherForecast.Tests.Mappers
+namespace AccountManager.Test.Mappers
 {
     public class MapperTests
     {
@@ -28,47 +30,54 @@ namespace WeatherForecast.Tests.Mappers
         }
 
         [Theory]
-        [InlineData("name","lastname",0,0)]
-        public void Given_ForecastModel_ShouldReturn_ForecastCommand(string name, string lastName, decimal accountBalance, decimal transactionAmount)
+        [InlineData(100.5)]
+        public void Given_BankTransaction_ShouldReturn_TransactionModel(decimal transactionAmount)
+        {
+            DateTimeOffset dateTimeOffset = DateTimeOffset.UtcNow;
+            var transaction = new BankTransaction { Amount = transactionAmount, TransactionTime = dateTimeOffset };
+            var model = mapper.Map<TransactionModel>(transaction);
+
+            Assert.NotNull(model);
+            Assert.Equal(transactionAmount, model.Amount);
+            Assert.Equal(dateTimeOffset, model.TransactionTime);
+        }
+
+        [Theory]
+        [InlineData(100, 30)]
+        public void Given_Account_ShouldReturn_AccountModel(decimal accountBalance, decimal transactionAmount)
+        {
+            DateTimeOffset dateTimeOffset = DateTimeOffset.UtcNow;
+            var account = new Account(accountBalance, new Customer());
+            var transaction = new BankTransaction { Amount = transactionAmount, TransactionTime = dateTimeOffset };
+            account.Transactions.Add(transaction);
+            var model = mapper.Map<AccountModel>(account);
+
+            Assert.NotNull(model);
+            Assert.Equal(accountBalance, model.Balance);
+            Assert.Single(model.Transactions);
+            Assert.Equal(transactionAmount, model.Transactions.FirstOrDefault().Amount);
+        }
+
+
+
+        [Theory]
+        [InlineData("name", "lastname", 0, 0)]
+        public void Given_Customer_ShouldReturn_CustomerModel(string name, string lastName, decimal accountBalance, decimal transactionAmount)
         {
             DateTimeOffset dateTimeOffset = DateTimeOffset.UtcNow;
             var customer = new Customer { Id = Guid.NewGuid(), Name = name, LastName = lastName };
             var account = new Account(accountBalance, customer);
             var transaction = new BankTransaction { Amount = transactionAmount, TransactionTime = dateTimeOffset };
             account.Transactions.Add(transaction);
-            customer.Accounts.Add(account);
+            customer.Accounts = new List<Account> { account };
             var model = mapper.Map<DetailedCustomerResponse>(customer);
 
             Assert.NotNull(model);
-            Assert.Equal(1, model.Accounts.Count);
+            Assert.Single(model.Accounts);
+            Assert.Equal(accountBalance, model.Accounts.FirstOrDefault().Balance);
+            Assert.Equal(transactionAmount, model.Accounts.FirstOrDefault().Transactions.FirstOrDefault().Amount);
+            Assert.Equal(dateTimeOffset, model.Accounts.FirstOrDefault().Transactions.FirstOrDefault().TransactionTime);
+
         }
-
-
-        //[Theory]
-        //[InlineData(2023, 1, 31, "Tuesday, January 31, 2023", 20, "foo")]
-        //public void Given_ForecastResponse_ShouldReturn_DailyForecastModel(int dateYear, int dateMonth, int dateDay, string expectedDate, int temperature, string summary)
-        //{
-        //    var response = new WeatherForecastResponse { Date = new DateOnly(dateYear, dateMonth, dateDay), Temperature = temperature, Summary = summary };
-        //    var model = mapper.Map<DailyWeatherForecastModel>(response);
-
-        //    Assert.NotNull(response);
-        //    Assert.Equal(response.Temperature, model.Temperature);
-        //    Assert.Equal(response.Summary, model.Description);
-        //    Assert.Equal(expectedDate, model.Date);
-        //}
-
-
-        //[Theory]
-        //[InlineData(2023, 1, 31, 20, "foo")]
-        //public void Given_ForecastResponseList_ShouldReturn_DailyForecastModelList(int dateYear, int dateMonth, int dateDay, int temperature, string summary)
-        //{
-        //    var response1 = new WeatherForecastResponse { Date = new DateOnly(dateYear, dateMonth, dateDay), Temperature = temperature, Summary = summary };
-        //    var response2 = new WeatherForecastResponse { Date = new DateOnly(dateYear, dateMonth, dateDay), Temperature = temperature, Summary = summary };
-        //    var list = new List<WeatherForecastResponse> { response1, response2 };
-        //    var model = mapper.Map<List<DailyWeatherForecastModel>>(list);
-
-        //    Assert.NotNull(model);
-        //    Assert.Equal(2, model.Count);
-        //}
     }
 }

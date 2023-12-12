@@ -10,6 +10,7 @@
         {
             Balance = balance;
             Customer = customer;
+            Transactions = new List<BankTransaction>();
         }
     }
 }
