@@ -24,7 +24,7 @@ namespace WeatherForecast.Api.Controllers
         [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult> CreateForecast([FromBody] CreateAccountCommand command)
+        public async Task<ActionResult> CreateAccount([FromBody] CreateAccountCommand command)
         {
             await mediator.Send(command);
             return Ok();
