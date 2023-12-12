@@ -6,6 +6,7 @@ namespace AccountManager.Application.Customers.Query.GetDetailedCustomerInformat
     {
         public string Name { get; set; }
         public string Lastname { get; set; }
+        public string TotalBalance { get; set; }
         public List<Account> Accounts { get; set; }
 
     }
