@@ -21,7 +21,7 @@ namespace AccountManager.Api.Controllers
         /// <param name="command">set account balance and customer</param>
         /// <returns>Ok if account was opened</returns>
         [HttpPost]
-        [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> CreateAccount([FromBody] CreateAccountCommand command)

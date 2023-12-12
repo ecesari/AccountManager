@@ -21,9 +21,9 @@ namespace AccountManager.Api.Controllers
         /// <param name="customerId"customer id</param>
         /// <returns>Ok if account was opened</returns>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<DetailedCustomerResponse>),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(IEnumerable<DetailedCustomerResponse>), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> GetCustomerInformation(Guid customerId)
         {
             var query = new GetDetailedCustomerInformationQuery { CustomerId = customerId };
