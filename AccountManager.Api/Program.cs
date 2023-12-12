@@ -4,6 +4,9 @@ using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Asp.Versioning;
 using AccountManager.Application.Accounts.Commands.CreateAccount;
+using AccountManager.Api.Middlewares;
+using Serilog;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,10 +25,11 @@ builder.Services.AddSwaggerGen(swagger =>
     });
 });
 
-builder.Services.AddDbContext<AccountManagerDbContext>(options => options.UseInMemoryDatabase("ApplicationDb"));
+builder.Services.AddDbContext<AccountManagerDbContext>(options => options.UseInMemoryDatabase("AccountDb"));
 builder.Services.AddRepositories();
 builder.Services.AddAutoMapper();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateAccountCommand).Assembly));
+
 
 builder.Services.AddApiVersioning(x =>
 {
@@ -38,11 +42,13 @@ builder.Services.AddApiVersioning(x =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.UseSerilogRequestLogging();
+app.UseMiddleware<CorrelationIdMiddleware>();
+app.UseMiddleware<LoggerMiddleware>();
 
 app.UseHttpsRedirection();
 
