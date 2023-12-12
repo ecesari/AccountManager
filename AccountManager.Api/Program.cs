@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Asp.Versioning;
 using AccountManager.Application.Accounts.Commands.CreateAccount;
 using AccountManager.Api.Middlewares;
-using Serilog;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,7 +45,6 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-//app.UseSerilogRequestLogging();
 app.UseMiddleware<CorrelationIdMiddleware>();
 app.UseMiddleware<LoggerMiddleware>();
 
