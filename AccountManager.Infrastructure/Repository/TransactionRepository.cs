@@ -5,7 +5,7 @@ using AccountManager.Infrastructure.Repository.Base;
 
 namespace AccountManager.Infrastructure.Repository
 {
-    public class TransactionRepository : BaseRepository<Transaction>, ITransactionRepository
+    public class TransactionRepository : BaseRepository<BankTransaction>, ITransactionRepository
     {
         public TransactionRepository(AccountManagerDbContext accountManagerDb) : base(accountManagerDb)
         {

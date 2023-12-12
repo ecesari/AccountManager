@@ -2,7 +2,7 @@
 
 namespace AccountManager.Domain.Repository
 {
-    public interface ITransactionRepository : IBaseRepository<Transaction>
+    public interface ITransactionRepository : IBaseRepository<BankTransaction>
     {
     }
 }

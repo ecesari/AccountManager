@@ -7,6 +7,6 @@ namespace AccountManager.Application.Common.Interfaces
     {
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Account> Accounts { get; set; }
-        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<BankTransaction> Transactions { get; set; }
     }
 }

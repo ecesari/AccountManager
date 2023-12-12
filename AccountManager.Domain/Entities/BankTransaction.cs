@@ -1,6 +1,6 @@
 ﻿namespace AccountManager.Domain.Entities
 {
-    public class Transaction :BaseEntity
+    public class BankTransaction :BaseEntity
     {
         public decimal Amount { get; set; }
         public DateTimeOffset TransactionTime { get; set; }
