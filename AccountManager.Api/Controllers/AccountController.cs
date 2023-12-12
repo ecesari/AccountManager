@@ -2,7 +2,7 @@ using AccountManager.Application.Accounts.Commands.CreateAccount;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WeatherForecast.Api.Controllers
+namespace AccountManager.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -28,6 +28,6 @@ namespace WeatherForecast.Api.Controllers
         {
             await mediator.Send(command);
             return Ok();
-        }       
+        }
     }
 }
