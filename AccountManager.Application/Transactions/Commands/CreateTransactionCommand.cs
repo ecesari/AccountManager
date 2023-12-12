@@ -2,7 +2,6 @@
 using AccountManager.Domain.Entities;
 using AccountManager.Domain.Repository;
 using MediatR;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace AccountManager.Application.Accounts.Commands.CreateAccount
 {
@@ -23,11 +22,11 @@ namespace AccountManager.Application.Accounts.Commands.CreateAccount
             this.accountRepository = accountRepository;
         }
 
-        public Task Handle(CreateTransactionCommand command, CancellationToken cancellationToken)
+        public async Task Handle(CreateTransactionCommand command, CancellationToken cancellationToken)
         {
-            //var account = accountRepository.GetByIdAsync(command.AccountId) ?? throw new EntityNotFoundException(nameof(Account), command.AccountId); ;
-            //var repository = new Domain.Entities.BankTransaction { Account = account}
-            throw new NotImplementedException();
+            var account = await accountRepository.GetByIdAsync(command.AccountId) ?? throw new EntityNotFoundException(nameof(Account), command.AccountId);
+            var transaction = new BankTransaction { Account = account, Amount = command.Amount, TransactionTime = DateTimeOffset.UtcNow };
+            await repository.AddAsync(transaction);
         }
     }
 }
