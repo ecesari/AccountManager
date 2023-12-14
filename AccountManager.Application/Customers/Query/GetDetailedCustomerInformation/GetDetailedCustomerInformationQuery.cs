@@ -24,7 +24,7 @@ namespace AccountManager.Application.Customers.Query.GetDetailedCustomerInformat
 
         public async Task<DetailedCustomerResponse> Handle(GetDetailedCustomerInformationQuery request, CancellationToken cancellationToken)
         {
-            var customer = await repository.GetByIdAsync(request.CustomerId) ?? throw new EntityNotFoundException(nameof(Customer), request.CustomerId);
+            var customer = await repository.GetByIdWithDetailedInformation(request.CustomerId) ?? throw new EntityNotFoundException(nameof(Customer), request.CustomerId);
             var response = mapper.Map<DetailedCustomerResponse>(customer);
             return response;    
         }

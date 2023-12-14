@@ -37,7 +37,7 @@ namespace AccountManager.Api.Controllers
         /// <param name="customerId"customer id</param>
         /// <returns>Ok if account was opened</returns>
         [HttpGet("/account")]
-        [ProducesResponseType(typeof(IEnumerable<DetailedCustomerResponse>),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(DetailedCustomerResponse),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> GetCustomerInformation(Guid customerId)
