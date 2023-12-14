@@ -18,6 +18,8 @@ namespace AccountManager.Infrastructure.Data
 
             modelBuilder.Entity<Customer>().HasMany(c => c.Accounts).WithOne(a => a.Customer);
             modelBuilder.Entity<Account>().HasMany(a => a.Transactions).WithOne(a => a.Account);
+
+            modelBuilder.Entity<Customer>().HasData(new Customer { LastName = "User", Name = "Test" });
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AccountManager.Application.Accounts.Models;
 using AccountManager.Application.Common.Mapper;
+using AccountManager.Application.Customers.Query.GetAllCustomers;
 using AccountManager.Application.Customers.Query.GetDetailedCustomerInformation;
 using AccountManager.Application.Transactions.Models;
 using AccountManager.Domain.Entities;
@@ -77,6 +78,35 @@ namespace AccountManager.Test.Mappers
             Assert.Equal(accountBalance, model.Accounts.FirstOrDefault().Balance);
             Assert.Equal(transactionAmount, model.Accounts.FirstOrDefault().Transactions.FirstOrDefault().Amount);
             Assert.Equal(dateTimeOffset, model.Accounts.FirstOrDefault().Transactions.FirstOrDefault().TransactionTime);
+
+        }
+
+        [Theory]
+        [InlineData("name", "lastname")]
+        public void Given_Customer_ShouldReturn_CustomerInformation(string name, string lastName)
+        {
+            var customer = new Customer { Id = Guid.NewGuid(), Name = name, LastName = lastName };
+
+            var model = mapper.Map<CustomerInformation>(customer);
+
+            Assert.NotNull(model);
+            Assert.Equal(name,model.Name);
+            Assert.Equal(lastName,model.LastName);
+
+        }
+
+        [Theory]
+        [InlineData("name", "lastname")]
+        public void Given_Customer_ShouldReturn_CustomerInformationResponse(string name, string lastName)
+        {
+            var customer = new Customer { Id = Guid.NewGuid(), Name = name, LastName = lastName };
+
+            var model = mapper.Map<CustomerInformationResponse>(customer);
+
+            Assert.NotNull(model);
+            Assert.Single(model.CustomerInformations);
+            Assert.Equal(name, model.CustomerInformations.FirstOrDefault().Name);
+            Assert.Equal(lastName, model.CustomerInformations.FirstOrDefault().LastName);
 
         }
     }

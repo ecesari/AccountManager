@@ -46,6 +46,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseMiddleware<CorrelationIdMiddleware>();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseMiddleware<LoggerMiddleware>();
 
 app.UseHttpsRedirection();

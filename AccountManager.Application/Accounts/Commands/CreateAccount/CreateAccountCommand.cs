@@ -26,7 +26,8 @@ namespace AccountManager.Application.Accounts.Commands.CreateAccount
 
         public async Task<Unit> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
         {
-            var customer = await customerRepository.GetByIdAsync(request.CustomerId) ?? throw new EntityNotFoundException(nameof(Customer), request.CustomerId);
+            var customer = await customerRepository.GetByIdAsync(request.CustomerId); 
+                if(customer == null) throw new EntityNotFoundException(nameof(Customer), request.CustomerId);
             var account = new Account(request.InitialCredit, customer);
             await repository.AddAsync(account);
             await mediator.Publish(new AccountCreatedEvent(account.Id, account.Balance));

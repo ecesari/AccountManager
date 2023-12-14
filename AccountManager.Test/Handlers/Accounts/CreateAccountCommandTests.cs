@@ -5,7 +5,7 @@ using AccountManager.Domain.Repository;
 using MediatR;
 using Moq;
 
-namespace iPractice.Test.Handlers.Clients
+namespace AccountManager.Test.Handlers.Accounts
 {
     public class CreateAccountCommandTests
     {
@@ -34,6 +34,6 @@ namespace iPractice.Test.Handlers.Clients
             var command = new CreateAccountCommand { CustomerId = Guid.NewGuid(), InitialCredit = 0 };
             customerRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<Guid>())).Returns<Customer?>(null);
             Assert.ThrowsAsync<EntityNotFoundException>(() => handler.Handle(command, CancellationToken.None));
-        }        
+        }
     }
 }

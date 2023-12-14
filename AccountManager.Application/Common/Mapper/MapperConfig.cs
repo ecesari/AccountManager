@@ -1,4 +1,5 @@
 ﻿using AccountManager.Application.Accounts.Models;
+using AccountManager.Application.Customers.Query.GetAllCustomers;
 using AccountManager.Application.Customers.Query.GetDetailedCustomerInformation;
 using AccountManager.Application.Transactions.Models;
 using AccountManager.Domain.Entities;
@@ -15,6 +16,10 @@ namespace AccountManager.Application.Common.Mapper
             CreateMap<Account, AccountModel>();
             CreateMap<Customer, DetailedCustomerResponse>()
              .ForMember(response => response.TotalBalance, opt => opt.MapFrom(src => src.Accounts.Sum(a => a.Balance)));
+            CreateMap<Customer, CustomerInformation>();
+            CreateMap<IList<Customer>, CustomerInformationResponse>()
+             .ForMember(response => response.CustomerInformations, opt => opt.MapFrom(src => src));
+
         }
     }
 }

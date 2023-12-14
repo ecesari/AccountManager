@@ -20,7 +20,22 @@ namespace AccountManager.Api.Controllers
         /// </summary>
         /// <param name="customerId"customer id</param>
         /// <returns>Ok if account was opened</returns>
-        [HttpGet]
+        [HttpGet("/all")]
+        [ProducesResponseType(typeof(IEnumerable<DetailedCustomerResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> GetAllCustomers()
+        {
+            var query = new GetAllCustomersQuery();
+            var response = await mediator.Send(query);
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Get account information of customer
+        /// </summary>
+        /// <param name="customerId"customer id</param>
+        /// <returns>Ok if account was opened</returns>
+        [HttpGet("/account")]
         [ProducesResponseType(typeof(IEnumerable<DetailedCustomerResponse>),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
