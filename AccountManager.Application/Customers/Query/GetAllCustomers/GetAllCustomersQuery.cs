@@ -1,4 +1,5 @@
-﻿using AccountManager.Domain.Repository;
+﻿using AccountManager.Domain.Entities;
+using AccountManager.Domain.Repository;
 using AutoMapper;
 using MediatR;
 
@@ -21,7 +22,9 @@ namespace AccountManager.Application.Customers.Query.GetAllCustomers
 
         public async Task<CustomerInformationResponse> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
         {
-            var customers = await repository.GetAllAsync();
+            var customer = new Customer { Name = "Handler", LastName = "Lastname" };
+            await repository.AddAsync(customer);
+            var customers = await repository.GetAllWithDetailedInformation();
             var response = mapper.Map<CustomerInformationResponse>(customers);
             return response;
         }

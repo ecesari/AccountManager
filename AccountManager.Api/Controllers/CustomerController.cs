@@ -1,3 +1,4 @@
+using AccountManager.Application.Customers.Query.GetAllCustomers;
 using AccountManager.Application.Customers.Query.GetDetailedCustomerInformation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

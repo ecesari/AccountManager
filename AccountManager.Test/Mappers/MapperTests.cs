@@ -48,7 +48,7 @@ namespace AccountManager.Test.Mappers
         public void Given_Account_ShouldReturn_AccountModel(decimal accountBalance, decimal transactionAmount)
         {
             DateTimeOffset dateTimeOffset = DateTimeOffset.UtcNow;
-            var account = new Account(accountBalance, new Customer());
+            var account = new Account { Balance = accountBalance, Customer = new Customer(), Transactions = [] };
             var transaction = new BankTransaction { Amount = transactionAmount, TransactionTime = dateTimeOffset };
             account.Transactions.Add(transaction);
             var model = mapper.Map<AccountModel>(account);
@@ -67,7 +67,7 @@ namespace AccountManager.Test.Mappers
         {
             DateTimeOffset dateTimeOffset = DateTimeOffset.UtcNow;
             var customer = new Customer { Id = Guid.NewGuid(), Name = name, LastName = lastName };
-            var account = new Account(accountBalance, customer);
+            var account = new Account{ Balance = accountBalance, Customer = customer, Transactions = [] };
             var transaction = new BankTransaction { Amount = transactionAmount, TransactionTime = dateTimeOffset };
             account.Transactions.Add(transaction);
             customer.Accounts = new List<Account> { account };
@@ -90,8 +90,8 @@ namespace AccountManager.Test.Mappers
             var model = mapper.Map<CustomerInformation>(customer);
 
             Assert.NotNull(model);
-            Assert.Equal(name,model.Name);
-            Assert.Equal(lastName,model.LastName);
+            Assert.Equal(name, model.Name);
+            Assert.Equal(lastName, model.LastName);
 
         }
 
