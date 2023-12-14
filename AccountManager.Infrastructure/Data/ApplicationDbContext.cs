@@ -17,9 +17,7 @@ namespace AccountManager.Infrastructure.Data
             modelBuilder.Entity<BankTransaction>().HasKey(t => t.Id);
 
             modelBuilder.Entity<Customer>().HasMany(c => c.Accounts).WithOne(a => a.Customer);
-            modelBuilder.Entity<Account>().HasOne(c => c.Customer).WithMany(a => a.Accounts);
             modelBuilder.Entity<Account>().HasMany(a => a.Transactions).WithOne(a => a.Account);
-            modelBuilder.Entity<BankTransaction>().HasOne(a => a.Account).WithMany(a => a.Transactions);
 
             modelBuilder.Entity<Customer>().HasData(new Customer { LastName = "User", Name = "Test", Id = Guid.NewGuid() });
         }
