@@ -100,8 +100,9 @@ namespace AccountManager.Test.Mappers
         public void Given_Customer_ShouldReturn_CustomerInformationResponse(string name, string lastName)
         {
             var customer = new Customer { Id = Guid.NewGuid(), Name = name, LastName = lastName };
+            var list = new List<Customer> { customer };
 
-            var model = mapper.Map<CustomerInformationResponse>(customer);
+            var model = mapper.Map<CustomerInformationResponse>(list);
 
             Assert.NotNull(model);
             Assert.Single(model.CustomerInformations);
