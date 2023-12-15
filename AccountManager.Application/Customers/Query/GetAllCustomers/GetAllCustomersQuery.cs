@@ -22,8 +22,6 @@ namespace AccountManager.Application.Customers.Query.GetAllCustomers
 
         public async Task<CustomerInformationResponse> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
         {
-            var customer = new Customer { Name = "Handler", LastName = "Lastname" };
-            await repository.AddAsync(customer);
             var customers = await repository.GetAllWithDetailedInformation();
             var response = mapper.Map<CustomerInformationResponse>(customers);
             return response;
