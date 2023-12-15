@@ -24,6 +24,12 @@ builder.Services.AddSwaggerGen(swagger =>
     });
 });
 
+// generate lowercase URLs
+builder.Services.Configure<RouteOptions>(options =>
+{
+    options.LowercaseUrls = true;
+});
+
 builder.Services.AddDbContext<AccountManagerDbContext>(options => options.UseInMemoryDatabase("AccountDb"));
 builder.Services.AddRepositories();
 builder.Services.AddAutoMapper();
