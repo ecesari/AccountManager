@@ -4,6 +4,6 @@
     {
         public string Name { get; set; }
         public string LastName { get; set; }
-        public List<Account> Accounts { get; set; }
+        public List<Account> Accounts { get; set; } = new List<Account>();
     }
 }

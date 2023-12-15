@@ -1,3 +1,5 @@
+using AccountManager.Application.Accounts.Commands.CreateAccount;
+using AccountManager.Application.Customers.Commands;
 using AccountManager.Application.Customers.Query.GetAllCustomers;
 using AccountManager.Application.Customers.Query.GetDetailedCustomerInformation;
 using MediatR;
@@ -44,6 +46,20 @@ namespace AccountManager.Api.Controllers
         {
             var query = new GetDetailedCustomerInformationQuery { CustomerId = customerId };
             var response = await mediator.Send(query);
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Get account information of customer
+        /// </summary>
+        /// <param name="customerId"customer id</param>
+        /// <returns>Ok if account was opened</returns>
+        [HttpPost]
+        [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> CreateCustomer([FromBody] CreateCustomerCommand command)
+        {
+            var response = await mediator.Send(command);
             return Ok(response);
         }
     }
