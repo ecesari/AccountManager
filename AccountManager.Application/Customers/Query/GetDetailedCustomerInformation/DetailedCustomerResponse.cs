@@ -1,4 +1,5 @@
-﻿using AccountManager.Domain.Entities;
+﻿using AccountManager.Application.Accounts.Models;
+using AccountManager.Domain.Entities;
 
 namespace AccountManager.Application.Customers.Query.GetDetailedCustomerInformation
 {
@@ -7,7 +8,7 @@ namespace AccountManager.Application.Customers.Query.GetDetailedCustomerInformat
         public string Name { get; set; }
         public string Lastname { get; set; }
         public string TotalBalance { get; set; }
-        public List<Account> Accounts { get; set; }
+        public List<AccountModel> Accounts { get; set; }
 
     }
 }

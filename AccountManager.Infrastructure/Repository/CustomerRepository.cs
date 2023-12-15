@@ -15,13 +15,13 @@ namespace AccountManager.Infrastructure.Repository
 
         public async Task<Customer> GetByIdWithDetailedInformation(Guid id)
         {
-            var customer = await accountDb.Customers.Include(x => x.Accounts).FirstOrDefaultAsync(x => x.Id == id);
+            var customer = await accountDb.Customers.Include(x => x.Accounts).ThenInclude(x => x.Transactions).FirstOrDefaultAsync(x => x.Id == id);
             return customer;
         }
 
         public async Task<IReadOnlyList<Customer>> GetAllWithDetailedInformation()
         {
-            var customers = await accountDb.Customers.Include(x => x.Accounts).ToListAsync();
+            var customers = await accountDb.Customers.Include(x => x.Accounts).ThenInclude(x => x.Transactions).ToListAsync();
             return customers;
         }
     }
