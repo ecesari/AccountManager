@@ -6,13 +6,13 @@ using MediatR;
 
 namespace AccountManager.Application.Accounts.Commands.CreateAccount
 {
-    public class CreateAccountCommand : IRequest<Unit>
+    public class CreateAccountCommand : IRequest<Guid>
     {
         public Guid CustomerId { get; set; }
         public decimal InitialCredit { get; set; }
     }
 
-    public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand, Unit>
+    public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand, Guid>
     {
         private readonly IAccountRepository repository;
         private readonly ICustomerRepository customerRepository;
@@ -24,13 +24,13 @@ namespace AccountManager.Application.Accounts.Commands.CreateAccount
             this.mediator = mediator;
         }
 
-        public async Task<Unit> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
         {
             var customer = await customerRepository.GetByIdAsync(request.CustomerId) ?? throw new EntityNotFoundException(nameof(Customer), request.CustomerId);
             var account = new Account { Balance = request.InitialCredit, Customer = customer };
             await repository.AddAsync(account);
             await mediator.Publish(new AccountCreatedEvent(account.Id, account.Balance));
-            return Unit.Value;
+            return account.Id;
 
         }
     }
